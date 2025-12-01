@@ -1,12 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { TOTAL_STEPS, useVehiculoForm } from './state/useVehiculoForm';
+import { useVehiculo } from './state/useVehiculo';
 import { DatosVehiculoScreen } from './screens/DatosVehiculoScreen';
 import { DetalleVehiculoScreen } from './screens/DetalleVehiculoScreen';
+import { ResumenScreen } from './screens/ResumenScreen';
 
 export default function App() {
 
   const { vehiculo, updateField, step, nextStep, prevStep, setStep, reset } = useVehiculoForm();
+  const { vehiculos, addVehiculo } = useVehiculo();
+
+  const handleRegistrar = () => {
+    addVehiculo(vehiculo);
+    setStep(3);
+  };
+
 
   const renderScreen = () => {
     if (step === 0) {
@@ -28,6 +37,16 @@ export default function App() {
         />
       );
     }
+    if (step === 2) {
+      return (
+        <ResumenScreen
+          vehiculo={vehiculo}
+          onBack={prevStep}
+          onRegistrar={handleRegistrar}
+        />
+      );
+    }
+
 
   };
 
