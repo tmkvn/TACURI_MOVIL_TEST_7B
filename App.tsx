@@ -5,6 +5,7 @@ import { useVehiculo } from './state/useVehiculo';
 import { DatosVehiculoScreen } from './screens/DatosVehiculoScreen';
 import { DetalleVehiculoScreen } from './screens/DetalleVehiculoScreen';
 import { ResumenScreen } from './screens/ResumenScreen';
+import { VehiculosRegistradosScreen } from './screens/VehiculosRegistradosScreen';
 
 export default function App() {
 
@@ -14,6 +15,10 @@ export default function App() {
   const handleRegistrar = () => {
     addVehiculo(vehiculo);
     setStep(3);
+  };
+
+  const handleRegistrarOtro = () => {
+    reset();
   };
 
 
@@ -47,7 +52,12 @@ export default function App() {
       );
     }
 
-
+    return (
+      <VehiculosRegistradosScreen
+        vehiculos={vehiculos}
+        onRegistrarOtro={handleRegistrarOtro}
+      />
+    );
   };
 
   const getSubtitle = () => {
