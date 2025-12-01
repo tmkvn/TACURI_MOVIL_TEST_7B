@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { TOTAL_STEPS, useVehiculoForm } from './state/useVehiculoForm';
 import { DatosVehiculoScreen } from './screens/DatosVehiculoScreen';
+import { DetalleVehiculoScreen } from './screens/DetalleVehiculoScreen';
 
 export default function App() {
 
@@ -17,6 +18,17 @@ export default function App() {
         />
       );
     }
+    if (step === 1) {
+      return (
+        <DetalleVehiculoScreen
+          vehiculo={vehiculo}
+          onChange={updateField}
+          onNext={nextStep}
+          onBack={prevStep}
+        />
+      );
+    }
+
   };
 
   const getSubtitle = () => {
