@@ -5,7 +5,7 @@ type FromButtonProps = TouchableOpacityProps & {
 }
 export const FromButton = ({ label, style, ...props }: FromButtonProps) => {
   return (
-    <TouchableOpacity {...props} style={[style, styles.button]}>
+    <TouchableOpacity {...props} style={[styles.button, style]}>
       <Text style={styles.Text}>{label}</Text>
     </TouchableOpacity>
   )

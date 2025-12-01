@@ -88,11 +88,11 @@ const styles = StyleSheet.create({
   },
   backButton: {
     flex: 1,
-    backgroundColor: '#f44336',
+    backgroundColor: '#4CAF50',
   },
   continueButton: {
     flex: 1,
-    backgroundColor: '#2196F3',
+    backgroundColor: '#4CAF50',
   },
   disabledButton: {
     backgroundColor: '#ccc',

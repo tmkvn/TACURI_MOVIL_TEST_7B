@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   registerButton: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#4CAF50',
   },
 });
 
