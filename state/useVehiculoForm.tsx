@@ -20,10 +20,11 @@ export const useVehiculoForm = () => {
   }
 
   const nextStep = () => goToStep(step + 1);
+  const prevStep = () => goToStep(step - 1);
   const reset = () => {
     setVehiculo(emptyVehiculo);
     setStep(0);
   }
 
-  return { vehiculo, step, nextStep, updateField, reset };
+  return { vehiculo, step, nextStep, prevStep, updateField, reset, setStep };
 }
