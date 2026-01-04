@@ -27,15 +27,20 @@ export const SummaryScreen = ({
       setIsSubmitting(true);
       await onRegistrar();
       Alert.alert("Registro exitoso", "El vehículo fue creado con éxito", [
-        { text: "Aceptar", onPress: onRegisterSuccess },
+        {
+          text: "Aceptar",
+          onPress: () => {
+            onRegisterSuccess();
+            setIsSubmitting(false);
+          },
+        },
       ]);
     } catch (error) {
       Alert.alert(
         "Error al registrar",
         "No se pudo registrar el vehículo. Inténtelo de nuevo.",
+        [{ text: "Aceptar", onPress: () => setIsSubmitting(false) }],
       );
-    } finally {
-      setIsSubmitting(false);
     }
   };
   return (
@@ -133,10 +138,9 @@ const styles = StyleSheet.create({
   },
   backButton: {
     flex: 1,
-    backgroundColor: "#f44336",
+    backgroundColor: "#c62323ff",
   },
   registerButton: {
     flex: 1,
-    backgroundColor: "#4CAF50",
   },
 });
