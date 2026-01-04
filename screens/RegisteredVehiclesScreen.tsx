@@ -1,13 +1,16 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { FromButton } from '../components/FormButton';
-import { Vehiculo } from '../models/vehiculo';
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { FromButton } from "../components/FormButton";
+import { Vehicle } from "../models/vehicle";
 
 type Props = {
-  vehiculos: Vehiculo[];
+  vehicles: Vehicle[];
   onRegistrarOtro: () => void;
 };
 
-export const VehiculosRegistradosScreen = ({ vehiculos, onRegistrarOtro }: Props) => {
+export const RegisteredVehiclesScreen = ({
+  vehicles,
+  onRegistrarOtro,
+}: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.tableContainer}>
@@ -18,20 +21,31 @@ export const VehiculosRegistradosScreen = ({ vehiculos, onRegistrarOtro }: Props
           <Text style={[styles.headerCell, styles.cellMarca]}>Marca</Text>
           <Text style={[styles.headerCell, styles.cellModelo]}>Modelo</Text>
         </View>
-        
+
         {/* Body */}
         <ScrollView style={styles.tableBody}>
-          {vehiculos.length === 0 ? (
+          {vehicles.length === 0 ? (
             <View style={styles.emptyRow}>
               <Text style={styles.emptyText}>No hay vehículos registrados</Text>
             </View>
           ) : (
-            vehiculos.map((vehiculo, index) => (
-              <View key={index} style={[styles.tableRow, index % 2 === 0 && styles.evenRow]}>
-                <Text style={[styles.cell, styles.cellPlaca]}>{vehiculo.placa}</Text>
-                <Text style={[styles.cell, styles.cellDuenio]}>{vehiculo.nombreDuenio}</Text>
-                <Text style={[styles.cell, styles.cellMarca]}>{vehiculo.marca}</Text>
-                <Text style={[styles.cell, styles.cellModelo]}>{vehiculo.modelo}</Text>
+            vehicles.map((vehicle, index) => (
+              <View
+                key={index}
+                style={[styles.tableRow, index % 2 === 0 && styles.evenRow]}
+              >
+                <Text style={[styles.cell, styles.cellPlaca]}>
+                  {vehicle.plate}
+                </Text>
+                <Text style={[styles.cell, styles.cellDuenio]}>
+                  {vehicle.ownerName}
+                </Text>
+                <Text style={[styles.cell, styles.cellMarca]}>
+                  {vehicle.brand}
+                </Text>
+                <Text style={[styles.cell, styles.cellModelo]}>
+                  {vehicle.model}
+                </Text>
               </View>
             ))
           )}
@@ -39,8 +53,8 @@ export const VehiculosRegistradosScreen = ({ vehiculos, onRegistrarOtro }: Props
       </View>
 
       <View style={styles.buttonContainer}>
-        <FromButton 
-          label="Registrar otro" 
+        <FromButton
+          label="Registrar otro"
           onPress={onRegistrarOtro}
           style={styles.registerButton}
         />
@@ -56,39 +70,39 @@ const styles = StyleSheet.create({
   tableContainer: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
     borderRadius: 8,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   tableHeader: {
-    flexDirection: 'row',
-    backgroundColor: '#4CAF50',
+    flexDirection: "row",
+    backgroundColor: "#4CAF50",
     paddingVertical: 12,
     paddingHorizontal: 8,
   },
   headerCell: {
-    color: '#fff',
-    fontWeight: '700',
+    color: "#fff",
+    fontWeight: "700",
     fontSize: 12,
-    textAlign: 'center',
+    textAlign: "center",
   },
   tableBody: {
     flex: 1,
   },
   tableRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingVertical: 10,
     paddingHorizontal: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: "#eee",
   },
   evenRow: {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: "#f9f9f9",
   },
   cell: {
     fontSize: 12,
-    color: '#333',
-    textAlign: 'center',
+    color: "#333",
+    textAlign: "center",
   },
   cellPlaca: {
     flex: 1,
@@ -104,17 +118,16 @@ const styles = StyleSheet.create({
   },
   emptyRow: {
     padding: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   emptyText: {
-    color: '#999',
-    fontStyle: 'italic',
+    color: "#999",
+    fontStyle: "italic",
   },
   buttonContainer: {
     marginTop: 16,
   },
   registerButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: "#4CAF50",
   },
 });
-
