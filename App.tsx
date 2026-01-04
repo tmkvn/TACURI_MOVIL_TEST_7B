@@ -6,14 +6,31 @@ import { VehicleInfoScreen } from "./screens/VehicleInfoScreen";
 import { VehicleDetaiScreen } from "./screens/VehicleDetaiScreen";
 import { SummaryScreen } from "./screens/SummaryScreen";
 import { RegisteredVehiclesScreen } from "./screens/RegisteredVehiclesScreen";
+import { useEffect } from "react";
 
 export default function App() {
-  const { vehicle, updateField, step, nextStep, prevStep, setStep, reset } =
-    useVehicleForm();
-  const { vehicles, addVehicle } = useVehicle();
+  const {
+    vehicle,
+    updateField,
+    step,
+    nextStep,
+    prevStep,
+    setStep,
+    reset,
+    resetForm,
+  } = useVehicleForm();
+  const { vehicles, addVehicle, loadVehicles } = useVehicle();
 
-  const handleRegistrar = () => {
-    addVehicle(vehicle);
+  useEffect(() => {
+    loadVehicles();
+  }, [step, loadVehicles]);
+
+  const handleRegistrar = async () => {
+    await addVehicle(vehicle);
+  };
+
+  const handleRegisterSuccess = () => {
+    resetForm();
     setStep(3);
   };
 
@@ -46,7 +63,8 @@ export default function App() {
         <SummaryScreen
           vehicle={vehicle}
           onBack={prevStep}
-          onRegistrar={handleRegistrar}
+          onRegister={handleRegistrar}
+          onRegisterSuccess={handleRegisterSuccess}
         />
       );
     }
@@ -61,7 +79,7 @@ export default function App() {
 
   const getSubtitle = () => {
     if (step === 3) {
-      return "Vehicles Registrados";
+      return "Vehiculos Registrados";
     }
     return `Paso ${step + 1} de ${TOTAL_STEPS}`;
   };

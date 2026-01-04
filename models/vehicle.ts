@@ -1,4 +1,5 @@
 export type Vehicle = {
+  id?: number;
   model: string;
   brand: string;
   plate: string;
@@ -8,6 +9,7 @@ export type Vehicle = {
 };
 
 export const emptyVehicle: Vehicle = {
+  id: undefined,
   model: "",
   brand: "",
   plate: "",

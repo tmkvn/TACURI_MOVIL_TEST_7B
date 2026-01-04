@@ -1,6 +1,8 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, RefreshControl } from "react-native";
 import { FromButton } from "../components/FormButton";
 import { Vehicle } from "../models/vehicle";
+import { useVehicle } from "../state/useVehicle";
+import { useEffect, useState } from "react";
 
 type Props = {
   vehicles: Vehicle[];
@@ -11,6 +13,21 @@ export const RegisteredVehiclesScreen = ({
   vehicles,
   onRegistrarOtro,
 }: Props) => {
+  const { loadVehicles, loading } = useVehicle();
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    loadVehicles();
+  }, []);
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await loadVehicles();
+    } finally {
+      setRefreshing(false);
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.tableContainer}>
@@ -23,7 +40,12 @@ export const RegisteredVehiclesScreen = ({
         </View>
 
         {/* Body */}
-        <ScrollView style={styles.tableBody}>
+        <ScrollView 
+          style={styles.tableBody}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+          }
+        >
           {vehicles.length === 0 ? (
             <View style={styles.emptyRow}>
               <Text style={styles.emptyText}>No hay vehículos registrados</Text>

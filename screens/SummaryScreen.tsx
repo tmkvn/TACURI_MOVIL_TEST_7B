@@ -1,14 +1,43 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import { FromButton } from "../components/FormButton";
 import { Vehicle } from "../models/vehicle";
+import { useState } from "react";
 
 type Props = {
   vehicle: Vehicle;
   onBack: () => void;
-  onRegistrar: () => void;
+  onRegister: () => Promise<void>;
+  onRegisterSuccess: () => void;
 };
 
-export const SummaryScreen = ({ vehicle, onBack, onRegistrar }: Props) => {
+export const SummaryScreen = ({
+  vehicle,
+  onBack,
+  onRegister: onRegistrar,
+  onRegisterSuccess,
+}: Props) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleRegister = async () => {
+    if (isSubmitting) {
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      await onRegistrar();
+      Alert.alert("Registro exitoso", "El vehículo fue creado con éxito", [
+        { text: "Aceptar", onPress: onRegisterSuccess },
+      ]);
+    } catch (error) {
+      Alert.alert(
+        "Error al registrar",
+        "No se pudo registrar el vehículo. Inténtelo de nuevo.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>Resumen de registro</Text>
@@ -54,7 +83,8 @@ export const SummaryScreen = ({ vehicle, onBack, onRegistrar }: Props) => {
           />
           <FromButton
             label="Registrar"
-            onPress={onRegistrar}
+            disabled={isSubmitting}
+            onPress={handleRegister}
             style={styles.registerButton}
           />
         </View>

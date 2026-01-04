@@ -25,5 +25,18 @@ export const useVehicleForm = () => {
     setStep(0);
   };
 
-  return { vehicle, step, nextStep, prevStep, updateField, reset, setStep };
+  const resetForm = () => {
+    setVehicle(emptyVehicle);
+  };
+
+  return {
+    vehicle,
+    step,
+    nextStep,
+    prevStep,
+    updateField,
+    reset,
+    resetForm,
+    setStep,
+  };
 };
